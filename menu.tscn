@@ -1,0 +1,106 @@
+[gd_scene load_steps=8 format=3 uid="uid://c2e1bgol5tlqi"]
+
+[ext_resource type="Script" uid="uid://5h6wnunu7r5e" path="res://zarScenes/scenes/menu.gd" id="1_alnur"]
+[ext_resource type="Texture2D" uid="uid://bp1r543bmc1ti" path="res://zarAssets/assets/sprites/8402.jpg" id="1_b8mx8"]
+[ext_resource type="FontFile" uid="uid://c3rkj7velyvf7" path="res://zarAssets/assets/fonts/PixelOperator8.ttf" id="1_pds2y"]
+[ext_resource type="FontFile" uid="uid://3levxjs607vl" path="res://zarAssets/assets/fonts/PixelOperator8-Bold.ttf" id="3_u174i"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u174i"]
+texture = ExtResource("1_b8mx8")
+modulate_color = Color(0.4321134, 0.4321134, 0.4321134, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b8mx8"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.35064948, 0.33213624, 0.33213624, 0.6)
+shadow_size = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pds2y"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_alnur")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_u174i")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -178.25
+offset_top = -92.5
+offset_right = 178.25
+offset_bottom = 92.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_pds2y")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_b8mx8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pds2y")
+text = "START"
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_pds2y")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_b8mx8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pds2y")
+text = "QUIT"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.27
+anchor_right = 0.5
+anchor_bottom = 0.27
+offset_left = -76.0
+offset_top = -15.960007
+offset_right = 76.0
+offset_bottom = 34.039993
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_u174i")
+theme_override_font_sizes/font_size = 80
+text = "TIME LEAPER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_START_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
