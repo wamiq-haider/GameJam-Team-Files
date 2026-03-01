@@ -1,43 +1,62 @@
 extends CharacterBody2D
 
+const SPEED = 100.0
+const JUMP_VELOCITY = -400.0
+const FALL_TIMEOUT = 10  # seconds before game over
 
-const SPEED = 400.0
-var direction: Vector2
-var has_key = false
-
+var fall_timer: float = 0.0
+var last_safe_y: float = 0.0
+var coins := 0
+const reqCoins = 10
+@onready var animated_sprite = $AnimatedSprite2D
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	direction = Input.get_vector("left","right","up","down")
-		
+	Engine.time_scale = 0.8
+
+	# Add gravity
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Handle jump
+	if is_on_floor():
+		velocity.y = JUMP_VELOCITY
+		last_safe_y = global_position.y
+		fall_timer = 0.0  # reset fall timer
+
+	# Detect falling below last safe platform
+	if global_position.y > last_safe_y:
+		fall_timer += delta
+		if fall_timer >= FALL_TIMEOUT:
+			get_tree().change_scene_to_file("res://scenes/main menu.tscn")
+			
+	else:
+		fall_timer = 0.0  # reset if player is not below
+
+	# Handle horizontal movement
+	var direction := Input.get_axis("ui_left", "ui_right")
+	
+	#Flip the sprite
+	if direction>0:
+		animated_sprite.flip_h=false
+	elif direction<0:
+		animated_sprite.flip_h=true
+	
 	if direction:
-		velocity = direction * SPEED
+		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.y = move_toward(velocity.y, 0, SPEED)
-	
-	animation()
+
 	move_and_slide()
+
+func addCoin():
+	coins += 1
 	
-func animation():
-	if direction: 
-		$AnimatedSprite2D.flip_h = direction.x < 0
-		if direction.x != 0:
-			$AnimatedSprite2D.animation = "right"
-		else:
-			$AnimatedSprite2D.animation = "up" if direction.y < 0 else "down"
+func game_over() -> void:
+	if (coins >= reqCoins):
+		print("U did it!")
+		get_tree().change_scene_to_file("res://scenes/win_menu.tscn")
 	else:
-		$AnimatedSprite2D.frame = 0 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		print("Not Enough Coins Collected!")
+		
+	# If you have a UI node for Game Over, show it here:
+	# $GameOverUI.visible = true

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwpd8w8vvrlw2"]
+
+[ext_resource type="AudioStream" uid="uid://b672nx0gkbkq4" path="res://assets/music/the_mountain-game-179496.mp3" id="1_05ggv"]
+
+[node name="music" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_05ggv")
+autoplay = true
